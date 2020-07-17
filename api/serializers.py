@@ -21,4 +21,4 @@ class WishSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = WishModel
-        fields = ('id', 'title', 'created_at')
+        fields = ('id', 'title', 'created_at', 'user')

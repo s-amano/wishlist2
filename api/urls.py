@@ -7,5 +7,6 @@ router.register('wishlist',views.WishViewSet)
 
 urlpatterns = [
     path('user/create/', views.CreateUserView.as_view(), name='create'),
+    path('link/<int:pk>/', views.CreateLink, name='link'),
     path('', include(router.urls)),
 ]

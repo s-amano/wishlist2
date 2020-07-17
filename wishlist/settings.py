@@ -25,7 +25,7 @@ SECRET_KEY = 't7+66jbnd-#owv+oapw6&)ea#b2$foj$aia=-(s-%npo2=*1(('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -42,6 +42,16 @@ INSTALLED_APPS = [
     'api.apps.ApiConfig',
     'corsheaders',
 ]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ],
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.TokenAuthentication',
+#     ],
+# }
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

@@ -1,4 +1,6 @@
 from django.shortcuts import render
+from django.http import HttpResponse
+import json
 from rest_framework import generics, authentication, permissions
 from api import serializers
 from .models import User, WishModel
@@ -15,6 +17,14 @@ class CreateUserView(generics.CreateAPIView):
 class WishViewSet(viewsets.ModelViewSet):
     queryset = WishModel.objects.all()
     serializer_class = serializers.WishSerializer
+    authentication_classes = (authentication.TokenAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
 
 def CreateLink(request, pk):
     # print(WishModel.objects.all())

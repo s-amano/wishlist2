@@ -10,6 +10,10 @@ import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Link from '@material-ui/core/Link';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
+  input: {
+    marginTop: '5%',
+  },
+  li: {
+    textAlign: 'center',
+  }
 }));
 
 const ApiFetch = (props) => {
@@ -98,29 +108,29 @@ const ApiFetch = (props) => {
 
   return (
     <Grid container alignItems="center" justify="center">
-      <Grid container spacing={1} xs={4}>
-        <List component="nav" aria-label="">
+      <Grid container alignItems="center" justify="center">
+        <List>
         {
           wishlists.map(wish =>
-          <ListItem className="" key={wish.id}>
+          <ListItem className="" key={wish.id} className={classes.li}>
             <ListItemText>
-              <Grid container >
+              <Grid container spacing={6}>
                 <Grid item xs={6}>
                   <h2>{wish.title}</h2>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button variant="contained" color="secondary" onClick={()=>deleteWish(wish.id)}>
+                  <Button size="large"  variant="contained" color="secondary" onClick={()=>deleteWish(wish.id)} >
                     <i className="fas fa-trash-alt"></i>
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button variant="contained" color="primary" onClick={()=>setEditedWish(wish)}>
+                  <Button size="large" variant="contained" color="primary" onClick={()=>setEditedWish(wish)}>
                     <i className="fas fa-pen"></i>
                   </Button>
                 </Grid>
                 <Grid item xs={2}>
-                  <Button variant="contained" color="success" onClick={()=>getAmazonLink(wish.id)}>
-                    Amazon Link
+                  <Button size="large" variant="contained" onClick={()=>getAmazonLink(wish.id)}>
+                    Link
                   </Button>
                 </Grid>
               </Grid>
@@ -128,23 +138,30 @@ const ApiFetch = (props) => {
           </ListItem>)
         }
         </List>
+      </Grid>
 
-      <Grid container spacing={1} >
-        <input className="wishInput" type='text' name='title'
+      <Grid container className={classes.input} alignItems="center" justify="center" spacing={2}>
+        <Grid item >
+        <TextField id="outlined-basic" variant="outlined" type='text' name='title'
           value = {editedWish.title}
           onChange={handleInputChange()}
           placeholder="欲しいもの" required />
+        </Grid>
+        <Grid item >
           { editedWish.id ?
-        <Button className="btn btn-primary btn-lg" onClick={()=>editWish(editedWish)} >編集</Button> :
-        <Button className="btn btn-success btn-lg" onClick={()=>newWish(editedWish)} >追加</Button> }
+        <Button variant="outlined" color="secondary" onClick={()=>editWish(editedWish)} >編集</Button> :
+        <Button variant="outlined" color="primary" onClick={()=>newWish(editedWish)} >追加</Button> }
+       </Grid>
       </Grid>
+
        { amazonLink.link ?
-        <a href={ amazonLink.link } >{ amazonLink.item }のAmazonリンク</a>:
+        <Link className={classes.input} href={ amazonLink.link } >{ amazonLink.item }のAmazonリンク</Link>:
         <></>
        }
+       </Grid>
 
-    </Grid>
-    </Grid>
+
+
   )
 }
 
